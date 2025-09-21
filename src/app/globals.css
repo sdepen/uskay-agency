@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ===========================
+   Fonts locales (titres)
+   =========================== */
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("/fonts/BodoniModa-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("/fonts/BodoniModa-Italic-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===========================
+   Design tokens (light/dark)
+   =========================== */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --brand: #00bf63;
+  --border-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    /* tu peux ajuster le brand en dark si besoin */
+  }
+}
+
+/* Map vers Tailwind v4 tokens + fonts venant de next/font */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-border: var(--border-color);
+
+  /* Corps & mono : injectés par next/font via layout.tsx */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Titres : Bodoni */
+  --font-heading: "Bodoni Moda", serif;
+}
+
+/* ===========================
+   Base
+   =========================== */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  /* reset bords + empêcher le débordement horizontal */
+  html, body { margin: 0; padding: 0; overflow-x: hidden; }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+      "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  /* Titres + quelques hooks */
+  h1, h2, h3, h4, h5, h6,
+  .title, .heading, .section-title, [data-heading] {
+    font-family: var(--font-heading) !important;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  /* Si un <span> est dans un heading, on garde la même police */
+  h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+    font-family: inherit !important;
+  }
+
+  a { color: inherit; text-decoration: none; }
+}
+
+/* ===========================
+   Utilitaires
+   =========================== */
+
+/* Applique rapidement la police titres si besoin */
+@utility font-heading { font-family: var(--font-heading) !important; }
+
+/* Hooks ciblés (tu les avais déjà, je les garde) */
+.site-brand,
+.main-nav a { font-family: var(--font-heading) !important; }
+
+.card-title,
+.process-card h3,
+.process-card strong {
+  font-family: var(--font-heading) !important;
+  font-weight: 700;
+}
+
+/* ===========================
+   Helper "full-bleed"
+   (pour lignes/bords plein écran)
+   =========================== */
+.full-bleed {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+}
