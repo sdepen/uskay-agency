@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Merci() {
   return (
     <main className="max-w-3xl mx-auto px-6 py-16">
@@ -5,7 +7,9 @@ export default function Merci() {
       <p className="mt-4 text-muted-foreground">
         Nous revenons vers vous sous 24h ouvrées.
       </p>
-      <a href="/" className="mt-8 inline-block underline">← Retour à l’accueil</a>
+      <Link href="/" className="mt-8 inline-block underline">
+        ← Retour à l’accueil
+      </Link>
     </main>
   );
 }

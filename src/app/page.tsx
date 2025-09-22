@@ -1,17 +1,9 @@
 'use client';
 
+import Link from "next/link";
 import { useEffect } from 'react';
 import Image from "next/image";
 
-/* ---------- petits composants utilitaires ---------- */
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="p-4 rounded-2xl bg-card border border-border">
-      <div className="text-2xl font-semibold">{value}</div>
-      <div className="text-muted-foreground text-xs mt-1">{label}</div>
-    </div>
-  );
-}
 
 function Card({ title, points }: { title: string; points: string[] }) {
   return (
@@ -67,10 +59,10 @@ export default function Page() {
       {/* ================= HEADER ================= */}
       <header className="fixed top-0 inset-x-0 z-50 w-full border-b border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-3">
-            <Image src="/images/petit-logo.png" alt="Uskay Agency" width={32} height={32} className="object-contain" priority />
-            <span className="site-brand text-2xl md:text-3xl font-bold">Uskay Agency</span>
-          </a>
+          <Link href="/" className="flex items-center gap-3">
+  <Image src="/images/petit-logo.png" alt="Uskay Agency" width={32} height={32} className="object-contain" priority />
+  <span className="site-brand text-2xl md:text-3xl font-bold">Uskay Agency</span>
+</Link>
 
           <div className="flex items-center gap-12">
             <nav className="main-nav hidden md:flex items-center gap-6 text-lg">
