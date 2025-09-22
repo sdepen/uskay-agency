@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic" as const;
 
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";

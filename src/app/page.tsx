@@ -95,15 +95,21 @@ export default function Page() {
 
           {/* Logo centré (mobile réduit + desktop large) */}
           <div className="mb-8 flex justify-center">
-            <img
+            <Image
               src="/images/logo.png"
               alt="Uskay Agency"
+              width={300}
+              height={200}
               className="mx-auto h-auto w-full max-w-[300px] sm:hidden border-0 outline-none shadow-none rounded-none bg-transparent"
+              priority
             />
-            <img
+            <Image
               src="/images/logo.png"
               alt="Uskay Agency"
-              className="mx-auto h-auto w-full hidden sm:block max-w-[640px] lg:max-w-[700px] border-0 outline-none shadow-none rounded-none bg-transparent"
+              width={700}
+              height={400}
+              className="mx-auto h-auto w-full hidden sm:block max-w-[700px] border-0 outline-none shadow-none rounded-none bg-transparent"
+              priority
             />
           </div>
 
@@ -261,8 +267,8 @@ export default function Page() {
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[
                 { label: "Exemple UGC 1", src: "/videos/ugc-one.mp4" },
-                { label: "Exemple UGC 2" },
-                { label: "Exemple UGC 3" },
+                { label: "Exemple UGC 2" }, // placeholder noir
+                { label: "Exemple UGC 3" }, // placeholder noir
               ].map((item, i) => (
                 <div key={i} className="rounded-3xl border border-border bg-card">
                   <div className="aspect-[9/16] w-full overflow-hidden rounded-t-3xl bg-black">
@@ -290,7 +296,7 @@ export default function Page() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-card to-muted border border-border">
               <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}>
-                Prêt à booster vos ventes avec de l'UGC qui convertit ?
+                Prêt à booster vos ventes avec de l’UGC qui convertit ?
               </h3>
               <p className="mt-2 text-muted-foreground">Parlez-nous de votre marque, vos objectifs et vos délais. On vous répond sous 24h ouvrées.</p>
               <div className="mt-6 flex flex-wrap gap-3">
@@ -340,10 +346,10 @@ export default function Page() {
               Votre avis compte beaucoup pour nous !
             </p>
 
-            {/* Formulaire (Google Apps Script) */}
+            {/* Formulaire */}
             <AvisForm />
 
-            {/* Avis publiés (Google Sheets via Apps Script) */}
+            {/* Avis publiés */}
             <h2 className="text-xl font-bold mb-4 text-center mt-10">Avis publiés</h2>
             <LiveReviewsClient />
 
@@ -388,7 +394,8 @@ export default function Page() {
           >
             <input type="hidden" name="access_key" value="6059c097-7686-40aa-ac33-faed518453a0" />
             <input type="hidden" name="subject" value="Nouveau message (formulaire de contact)" />
-            <input type="hidden" name="redirect" value="http://localhost:3000/merci?from=contact#contact" />
+            {/* évite le localhost en prod */}
+            <input type="hidden" name="redirect" value="/merci?from=contact#contact" />
             <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
             <div className="grid sm:grid-cols-2 gap-4">
