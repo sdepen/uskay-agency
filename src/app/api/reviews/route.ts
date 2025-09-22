@@ -1,31 +1,55 @@
-// src/app/api/reviews/route.ts
-import { NextResponse } from "next/server";
-// ton fichier supabaseAdmin.ts est à la racine dans /lib → on remonte 4 dossiers
-import { supabaseAdmin } from "../../../../lib/supabaseAdmin";
+export const dynamic = "force-dynamic";
 
-export async function POST(req: Request) {
-  const form = await req.formData();
+import { NextRequest, NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import path from "path";
 
-  // anti-spam optionnel si tu as un champ caché name="botcheck"
-  if (form.get("botcheck")) {
-    return NextResponse.redirect(new URL("/merci", req.url));
+const filePath = path.join(process.cwd(), "src/data/reviews.json");
+
+// 🔹 Helper: lit les avis ou crée le fichier si besoin
+async function readReviewsFile() {
+  try {
+    const data = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(data || "[]");
+  } catch {
+    // si fichier inexistant -> crée un fichier vide
+    await fs.writeFile(filePath, "[]", "utf-8");
+    return [];
   }
+}
 
-  const rating  = Number(form.get("rating") ?? 5);
-  const name    = String(form.get("name") || "Anonyme");
-  const email   = String(form.get("email") || "");
-  const company = String(form.get("company") || "");
-  const message = String(form.get("message") || "");
+// GET → renvoie les avis
+export async function GET() {
+  try {
+    const reviews = await readReviewsFile();
+    return NextResponse.json({ items: reviews });
+  } catch (e: any) {
+    console.error("Erreur GET API:", e.message);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
 
-  await supabaseAdmin.from("reviews").insert({
-    name, email, company, rating, message, published: true,
-  });
+// POST → ajoute un avis
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const reviews = await readReviewsFile();
 
-  // redirection après envoi (existe déjà chez toi : /merci)
-  const redirect = (form.get("redirect") as string) || "/merci";
-  const base = new URL(req.url);
-  const to = redirect.startsWith("http")
-    ? redirect
-    : `${base.protocol}//${base.host}${redirect}`;
-  return NextResponse.redirect(to);
+    const newReview = {
+      name: body.name || "Anonyme",
+      email: body.email || "",
+      rating: body.rating || 5,
+      comment: body.comment || "",
+      createdAt: new Date().toISOString(),
+    };
+
+    reviews.push(newReview);
+
+    await fs.writeFile(filePath, JSON.stringify(reviews, null, 2));
+
+    return NextResponse.json({ ok: true, review: newReview });
+  } catch (e: any) {
+    console.error("Erreur POST API:", e.message);
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
 }

@@ -1,61 +1,54 @@
-// src/components/LiveReviewsClient.tsx
-'use client';
-
-import { createClient } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
+"use client";
+import { useEffect, useState } from "react";
 
 type Review = {
   name: string;
-  company: string | null;
   rating: number;
-  message: string;
-  created_at: string;
+  comment: string;
+  createdAt: string;
 };
 
 export default function LiveReviewsClient() {
-  const [items, setItems] = useState<Review[] | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-
-    supabase
-      .from('reviews')
-      .select('name,company,rating,message,created_at')
-      .eq('published', true)
-      .order('created_at', { ascending: false })
-      .limit(9)
-      .then(({ data }) => setItems(data ?? []));
+    (async () => {
+      try {
+        const res = await fetch("/api/reviews", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setReviews(Array.isArray(data) ? data : []);
+      } catch (e: any) {
+        console.error(e);
+        setErr("Impossible de charger les avis.");
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
-  if (!items) return <p className="mt-8 text-center text-muted-foreground">Chargement…</p>;
+  if (loading) return <p className="text-center">⏳ Chargement des avis…</p>;
+  if (err) return <p className="text-center text-red-500">{err}</p>;
+  if (reviews.length === 0) return <p className="text-center">Aucun avis pour l’instant.</p>;
 
   return (
-    <div className="mt-16">
-      <h3 className="text-2xl font-bold text-center" style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}>
-        Les retous de nos clients !
-      </h3>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((r, i) => (
-          <figure key={i} className="rounded-2xl border border-border p-6 bg-card">
-            <div className="flex items-center gap-1 text-amber-400" aria-label={`${r.rating} étoiles`}>
-              <span className="text-lg">{"★★★★★".slice(0, r.rating)}</span>
-              <span className="text-lg text-muted-foreground">{"☆☆☆☆☆".slice(0, 5 - r.rating)}</span>
+    <div className="mt-8 grid gap-4 max-w-2xl mx-auto">
+      {reviews
+        .slice() // copie
+        .reverse() // pour avoir les plus récents en premier
+        .map((r, i) => (
+          <div key={i} className="p-4 border rounded-xl bg-card">
+            <div className="font-semibold">
+              {r.name || "Anonyme"} – ⭐ {r.rating}
             </div>
-            <blockquote className="mt-3">“{r.message}”</blockquote>
-            <figcaption className="mt-4 text-sm text-muted-foreground">
-              {r.name}{r.company ? ` — ${r.company}` : ""} • {new Date(r.created_at).toLocaleDateString("fr-FR")}
-            </figcaption>
-          </figure>
+            <div className="text-sm mt-1">{r.comment}</div>
+            <div className="text-xs text-gray-500 mt-2">
+              {new Date(r.createdAt).toLocaleDateString()}
+            </div>
+          </div>
         ))}
-        {items.length === 0 && (
-          <p className="text-center text-muted-foreground col-span-full">
-            Aucun avis pour le moment. Soyez le premier !
-          </p>
-        )}
-      </div>
     </div>
   );
 }
