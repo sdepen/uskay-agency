@@ -1,23 +1,24 @@
-// src/app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Footer from "./components/Footer";
 
-const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
-const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
-
-export const metadata: Metadata = {
-  title: "Uskay Agency — Du contenu qui parle, des ventes qui suivent",
-  description:
-    "Uskay Agency met en relation marques & CM avec les meilleurs créateurs UGC et pilote vos campagnes de A à Z.",
-  icons: { icon: [{ url: "/favicon.ico", sizes: "any", rel: "icon" }] }, // mets public/favicon.ico
+export const metadata = {
+  title: "Uskay Agency",
+  description: "Agence UGC bien-être",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ fontFamily: "var(--font-sans)" }}>
-        {children}
+      <body className="min-h-screen flex flex-col">
+        {/* Contenu des pages */}
+        <div className="flex-1">{children}</div>
+
+        {/* Footer global */}
+        <Footer />
       </body>
     </html>
   );

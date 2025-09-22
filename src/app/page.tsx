@@ -2,8 +2,6 @@
 
 import { useEffect } from 'react';
 import Image from "next/image";
-import AvisForm from "./components/AvisForm";
-import LiveReviewsClient from "./components/LiveReviewsClient";
 
 /* ---------- petits composants utilitaires ---------- */
 function Stat({ label, value }: { label: string; value: string }) {
@@ -338,25 +336,6 @@ export default function Page() {
         </section>
       </div>
 
-      {/* ================= AVIS ================= */}
-      <div className="full-bleed border-t border-border">
-        <section id="avis" className="py-20">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="font-heading text-2xl md:text-3xl font-semibold text-center" style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}>
-              Votre avis compte beaucoup pour nous !
-            </p>
-
-            {/* Formulaire */}
-            <AvisForm />
-
-            {/* Avis publiés */}
-            <h2 className="text-xl font-bold mb-4 text-center mt-10">Avis publiés</h2>
-            <LiveReviewsClient />
-
-            <div className="full-bleed my-12 h-px bg-black/80" />
-          </div>
-        </section>
-      </div>
 
       {/* ================= FORMULAIRE EXTERNE ================= */}
       <h2 className="font-heading text-3xl md:text-4xl font-bold text-center mt-6" style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}>
