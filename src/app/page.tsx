@@ -320,7 +320,7 @@ export default function Page() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-card to-muted border border-border">
               <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
-                Prêt à booster vos ventes avec de l’UGC qui convertit ?
+                Prêts à booster vos ventes avec de l’UGC qui convertit ?
               </h3>
               <p className="mt-2 text-muted-foreground">
                 Parlez-nous de votre marque, vos objectifs et vos délais. On vous répond sous 24h ouvrées.
