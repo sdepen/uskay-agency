@@ -43,26 +43,23 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json();
-    const data = BodySchema.parse({
-      ...json,
-      rating: Number(json.rating),
-    });
+    const data = BodySchema.parse({ ...json, rating: Number(json.rating) });
 
     const review: Review = {
-      id: crypto.randomUUID(),           // ✅ API Web (Edge)
+      id: crypto.randomUUID(),
       name: data.name.trim(),
       email: data.email?.trim(),
       brand: data.brand?.trim(),
       message: data.message.trim(),
       rating: data.rating,
       createdAt: Date.now(),
-      approved: true,                    // mets false si tu veux modérer avant affichage
+      approved: true,
     };
 
     await kv.zadd("reviews", { score: review.createdAt, member: review });
-
     return NextResponse.json({ ok: true, review });
-  } catch (e: any) {
-    return NextResponse.json({ ok: false, error: e.message }, { status: 400 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ ok: false, error: message }, { status: 400 });
   }
 }
