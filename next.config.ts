@@ -2,8 +2,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
-  images: { unoptimized: true }, // autorise <Image /> en export statique
+  reactStrictMode: true,
+  // surtout PAS: output: "export"
 };
 
 export default nextConfig;
