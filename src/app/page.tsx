@@ -2,8 +2,9 @@
 
 import LiveReviewsClient from "../components/LiveReviewsClient";
 import Link from "next/link";
-import { useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import type { MouseEvent } from "react";
 
 function Card({ title, points }: { title: string; points: string[] }) {
   return (
@@ -28,13 +29,22 @@ function Card({ title, points }: { title: string; points: string[] }) {
 
 /* =============================== PAGE =============================== */
 export default function Page() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-  }, []);
+  const pathname = usePathname();
+
+  // Smooth scroll quand on est déjà sur la home
+  function handleLogoClick(e: MouseEvent<HTMLAnchorElement>) {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Design tokens */}
+      {/* Ancre optionnelle (pas nécessaire avec window.scrollTo, mais inoffensive) */}
+      <div id="top" />
+
+      {/* Design tokens locaux à la page (tu peux garder si tu veux) */}
       <style>{`
         :root {
           --primary: 151 100% 37%;
@@ -66,7 +76,11 @@ export default function Page() {
       {/* ================= HEADER ================= */}
       <header className="fixed top-0 inset-x-0 z-50 w-full border-b border-black bg-white">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
+          <Link
+            href="/"
+            onClick={handleLogoClick}  // évite le "saut" si on est déjà sur /
+            className="flex items-center gap-3"
+          >
             <Image
               src="/images/petit-logo.png"
               alt="Uskay Agency"
@@ -82,18 +96,10 @@ export default function Page() {
 
           <div className="flex items-center gap-12">
             <nav className="main-nav hidden md:flex items-center gap-6 text-lg">
-              <a href="#services" className="hover:opacity-70">
-                Services
-              </a>
-              <a href="#methode" className="hover:opacity-70">
-                Méthode
-              </a>
-              <a href="#realisations" className="hover:opacity-70">
-                Réalisations
-              </a>
-              <a href="#faq" className="hover:opacity-70">
-                FAQ
-              </a>
+              <a href="#services" className="hover:opacity-70">Services</a>
+              <a href="#methode" className="hover:opacity-70">Méthode</a>
+              <a href="#realisations" className="hover:opacity-70">Réalisations</a>
+              <a href="#faq" className="hover:opacity-70">FAQ</a>
             </nav>
 
             <a
@@ -134,9 +140,7 @@ export default function Page() {
             style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}
           >
             <span className="block italic">Du contenu qui parle,</span>
-            <span className="block italic text-[#00bf63]">
-              des ventes qui suivent.
-            </span>
+            <span className="block italic text-[#00bf63]">des ventes qui suivent.</span>
           </h1>
 
           <p className="mt-6 text-lg text-muted-foreground max-w-3xl text-left">
@@ -147,16 +151,10 @@ export default function Page() {
           </p>
 
           <div className="flex flex-wrap items-center justify-start gap-4 sm:gap-6 my-6">
-            <a
-              className="inline-flex h-12 items-center rounded-2xl bg-[#00bf63] px-5 text-base font-medium text-white"
-              href="#contact"
-            >
+            <a className="inline-flex h-12 items-center rounded-2xl bg-[#00bf63] px-5 text-base font-medium text-white" href="#contact">
               Demander un devis →
             </a>
-            <a
-              className="inline-flex h-12 items-center rounded-2xl border-2 border-foreground px-5 text-base font-medium"
-              href="#realisations"
-            >
+            <a className="inline-flex h-12 items-center rounded-2xl border-2 border-foreground px-5 text-base font-medium" href="#realisations">
               Voir des résultats →
             </a>
           </div>
@@ -179,9 +177,7 @@ export default function Page() {
       <div className="w-full border-t border-border">
         <section className="max-w-7xl mx-auto px-4 h-28 grid place-items-center text-center">
           <h3 className="uppercase tracking-[0.3em]">ILS NOUS FONT CONFIANCE</h3>
-          <p className="mt-2 text-muted-foreground">
-            Soyez les premiers à nous faire confiance.
-          </p>
+          <p className="mt-2 text-muted-foreground">Soyez les premiers à nous faire confiance.</p>
         </section>
       </div>
 
@@ -190,15 +186,11 @@ export default function Page() {
         <section id="services" className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h2
-                className="text-3xl md:text-4xl font-bold"
-                style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}
-              >
+              <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
                 SERVICES
               </h2>
               <p className="mt-3 text-muted-foreground">
-                De A à Z ou à la carte, selon vos besoins et vos objectifs de
-                marque.
+                De A à Z ou à la carte, selon vos besoins et vos objectifs de marque.
               </p>
             </div>
 
@@ -261,35 +253,19 @@ export default function Page() {
         <section id="methode" className="py-20 scroll-mt-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h2
-                className="text-3xl md:text-4xl font-bold"
-                style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}
-              >
+              <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
                 NOTRE MÉTHODE
               </h2>
               <p className="mt-3 text-muted-foreground">
-                Un process simple, fluide et transparent, pensé pour gagner du
-                temps et créer du contenu qui performe.
+                Un process simple, fluide et transparent, pensé pour gagner du temps et créer du contenu qui performe.
               </p>
             </div>
             <ol className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-6 list-decimal list-inside">
               {[
-                {
-                  t: "Brief rapide",
-                  d: "On définit vos besoins et objectifs dès le départ.",
-                },
-                {
-                  t: "Sélection & validation",
-                  d: "Propositions de créateurs et formats, vous validez avant lancement.",
-                },
-                {
-                  t: "Production & ajustements",
-                  d: "Création vidéos/photos + retours possibles selon le pack choisi.",
-                },
-                {
-                  t: "Livraison finale",
-                  d: "Envoi de contenus optimisés (formats adaptés + droits d’usage).",
-                },
+                { t: "Brief rapide", d: "On définit vos besoins et objectifs dès le départ." },
+                { t: "Sélection & validation", d: "Propositions de créateurs et formats, vous validez avant lancement." },
+                { t: "Production & ajustements", d: "Création vidéos/photos + retours possibles selon le pack choisi." },
+                { t: "Livraison finale", d: "Envoi de contenus optimisés (formats adaptés + droits d’usage)." },
               ].map((s, i) => (
                 <li key={i} className="p-5 rounded-2xl bg-card border border-border">
                   <p className="font-semibold">{s.t}</p>
@@ -305,15 +281,11 @@ export default function Page() {
       <div className="w-full border-t border-border">
         <section id="realisations" className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2
-              className="text-3xl md:text-4xl font-bold"
-              style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}
-            >
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
               RÉALISATIONS
             </h2>
             <p className="mt-2 text-muted-foreground">
-              Exemples d’UGC produits par notre réseau de créateurs et
-              créatrices :
+              Exemples d’UGC produits par notre réseau de créateurs et créatrices :
             </p>
 
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -334,9 +306,7 @@ export default function Page() {
                       />
                     ) : null}
                   </div>
-                  <div className="p-3 text-sm text-muted-foreground">
-                    {item.label}
-                  </div>
+                  <div className="p-3 text-sm text-muted-foreground">{item.label}</div>
                 </div>
               ))}
             </div>
@@ -349,21 +319,14 @@ export default function Page() {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-card to-muted border border-border">
-              <h3
-                className="text-2xl md:text-3xl font-bold"
-                style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}
-              >
+              <h3 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
                 Prêt à booster vos ventes avec de l’UGC qui convertit ?
               </h3>
               <p className="mt-2 text-muted-foreground">
-                Parlez-nous de votre marque, vos objectifs et vos délais. On
-                vous répond sous 24h ouvrées.
+                Parlez-nous de votre marque, vos objectifs et vos délais. On vous répond sous 24h ouvrées.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href="#contact"
-                  className="px-5 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90"
-                >
+                <a href="#contact" className="px-5 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:opacity-90">
                   Démarrer
                 </a>
                 <a
@@ -379,48 +342,40 @@ export default function Page() {
       </div>
 
       {/* ================= FAQ ================= */}
-<div className="full-bleed border-t border-border">
-  <section id="faq" className="py-20">
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2
-        className="text-3xl md:text-4xl font-bold"
-        style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}
-      >
-        FAQ
-      </h2>
-      <div className="mt-8 divide-y divide-border rounded-2xl border border-border overflow-hidden">
-        {[
-          {q:"Pourquoi passer par une agence UGC ?", a:"Pour gagner du temps et obtenir des contenus authentiques, performants et prêts à l’emploi, créés par des créateurs spécialisés."},
-          {q:"Quels types de contenus livrez-vous ?", a:"Des vidéos (face caméra, avant/après, publicités, voix-off) et des photos (lifestyle & produit), optimisées pour vos réseaux sociaux."},
-          {q:"Quels sont vos délais ?", a:"En moyenne 7 à 14 jours après validation du brief, selon le pack choisi."},
-          {q:"Proposez-vous du sur-mesure ?", a:"Oui. Vous pouvez choisir un pack clé en main ou une prestation personnalisée. Selon le pack choisi, des retours et modifications sont inclus."},
-        ].map((item, i) => (
-          <details key={i} className="group open:bg-card">
-            <summary className="cursor-pointer px-6 py-5 list-none flex items-center justify-between">
-              {/* 🚀 gras retiré → font-normal */}
-              <span className="font-normal">{item.q}</span>
-              <span className="transition-transform group-open:rotate-45 text-muted-foreground">+</span>
-            </summary>
-            <div className="px-6 pb-6 text-muted-foreground">{item.a}</div>
-          </details>
-        ))}
+      <div className="full-bleed border-t border-border">
+        <section id="faq" className="py-20">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: 'var(--uskay-font, ui-sans-serif)' }}>
+              FAQ
+            </h2>
+            <div className="mt-8 divide-y divide-border rounded-2xl border border-border overflow-hidden">
+              {[
+                { q: "Pourquoi passer par une agence UGC ?", a: "Pour gagner du temps et obtenir des contenus authentiques, performants et prêts à l’emploi, créés par des créateurs spécialisés." },
+                { q: "Quels types de contenus livrez-vous ?", a: "Des vidéos (face caméra, avant/après, publicités, voix-off) et des photos (lifestyle & produit), optimisées pour vos réseaux sociaux." },
+                { q: "Quels sont vos délais ?", a: "En moyenne 7 à 14 jours après validation du brief, selon le pack choisi." },
+                { q: "Proposez-vous du sur-mesure ?", a: "Oui. Vous pouvez choisir un pack clé en main ou une prestation personnalisée. Selon le pack choisi, des retours et modifications sont inclus." },
+              ].map((item, i) => (
+                <details key={i} className="group open:bg-card">
+                  <summary className="cursor-pointer px-6 py-5 list-none flex items-center justify-between">
+                    <span className="font-normal">{item.q}</span>
+                    <span className="transition-transform group-open:rotate-45 text-muted-foreground">+</span>
+                  </summary>
+                  <div className="px-6 pb-6 text-muted-foreground">{item.a}</div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
-  </section>
-</div>
-
 
       {/* ================= AVIS ================= */}
       <div className="w-full h-px bg-black/10 my-10" />
-
       <section id="avis" className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           {/* Le composant gère le formulaire + la liste */}
           <LiveReviewsClient />
         </div>
       </section>
-
-      {/* fin AVIS ↑ – séparateur fin, sans gros espace */}
       <div className="w-full h-px bg-black/80 my-8" />
 
       {/* ================= FORMULAIRE EXTERNE ================= */}
@@ -434,8 +389,7 @@ export default function Page() {
 
         <p className="mt-4 mb-4 text-center">
           Vous avez collaboré avec nous ?{" "}
-          <span className="font-medium">Partagez votre ressenti</span> en 1
-          minute pour aider les prochains clients.
+          <span className="font-medium">Partagez votre ressenti</span> en 1 minute pour aider les prochains clients.
         </p>
 
         <div className="mt-2 flex justify-center mb-16">
@@ -450,7 +404,6 @@ export default function Page() {
         </div>
       </section>
 
-      {/* séparateur entre FORMULAIRE EXTERNE et CONTACT */}
       <div className="w-full h-px bg-black/80 my-8" />
 
       {/* ================= CONTACT ================= */}
@@ -463,8 +416,7 @@ export default function Page() {
             CONTACT
           </h2>
           <p className="mt-3 text-muted-foreground">
-            Expliquez votre besoin en 30 secondes. On revient vers vous
-            rapidement.
+            Expliquez votre besoin en 30 secondes. On revient vers vous rapidement.
           </p>
 
           <form
@@ -472,29 +424,10 @@ export default function Page() {
             method="POST"
             className="mt-8 grid gap-4"
           >
-            <input
-              type="hidden"
-              name="access_key"
-              value="6059c097-7686-40aa-ac33-faed518453a0"
-            />
-            <input
-              type="hidden"
-              name="subject"
-              value="Nouveau message (formulaire de contact)"
-            />
-            {/* évite le localhost en prod */}
-            <input
-              type="hidden"
-              name="redirect"
-              value="/merci?from=contact#contact"
-            />
-            <input
-              type="checkbox"
-              name="botcheck"
-              className="hidden"
-              tabIndex={-1}
-              autoComplete="off"
-            />
+            <input type="hidden" name="access_key" value="6059c097-7686-40aa-ac33-faed518453a0" />
+            <input type="hidden" name="subject" value="Nouveau message (formulaire de contact)" />
+            <input type="hidden" name="redirect" value="/merci?from=contact#contact" />
+            <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
             <div className="grid sm:grid-cols-2 gap-4">
               <input
@@ -525,18 +458,12 @@ export default function Page() {
             />
 
             <div className="flex items-center gap-3">
-              <button
-                type="submit"
-                className="px-5 py-3 rounded-xl bg-[#00bf63] text-white hover:opacity-90"
-              >
+              <button type="submit" className="px-5 py-3 rounded-xl bg-[#00bf63] text-white hover:opacity-90">
                 Envoyer
               </button>
               <span className="text-sm text-muted-foreground">
                 Ou contactez-nous :
-                <a
-                  className="underline ml-1"
-                  href="mailto:contact@uskay-agency.com"
-                >
+                <a className="underline ml-1" href="mailto:contact@uskay-agency.com">
                   contact@uskay-agency.com
                 </a>
               </span>
@@ -544,6 +471,6 @@ export default function Page() {
           </form>
         </div>
       </section>
-    </div> // <-- ferme le wrapper .min-h-screen
+    </div>
   );
 }
