@@ -6,7 +6,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <head>
-        {/* Balise demandée par Meta */}
         <meta
           name="facebook-domain-verification"
           content="6cs01g7onaexx94serj0jxgwy5roz"
