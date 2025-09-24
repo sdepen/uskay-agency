@@ -20,13 +20,16 @@ export default function MentionsLegalesPage() {
         </p>
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            <strong>Nom / Prénom :</strong> Depenweiller Sacha et Agathe Pagnon
+            <strong>Raison sociale (nom légal) :</strong> Depenweiller Sacha
+          </li>
+          <li>
+          <strong>Nom commercial :</strong> Uskay Agency
           </li>
           <li>
             <strong>Statut :</strong> Micro-entrepreneur
           </li>
           <li>
-            <strong>Adresse :</strong> 17 bis route de Boussange, 57270 Richemont, France
+            <strong>Adresse :</strong> 17B route de Boussange, 57270 Richemont, France
           </li>
           <li>
             <strong>Email :</strong>{" "}
