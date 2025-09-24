@@ -1,9 +1,17 @@
+// src/app/layout.tsx
+import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "../components/Footer";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Uskay Agency",
   description: "Agence UGC bien-être",
+  // ⬇️ Ajoute la vérification de domaine Facebook dans le <head>
+  verification: {
+    other: {
+      "facebook-domain-verification": "6cs01g7onaexx94serj0jxgwy5roz",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -13,11 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      {/* Pas de <Head> ici avec l'App Router, Next le gère via `metadata` */}
       <body className="min-h-screen flex flex-col">
-        {/* Contenu des pages */}
         <div className="flex-1">{children}</div>
-
-        {/* Footer global */}
         <Footer />
       </body>
     </html>
