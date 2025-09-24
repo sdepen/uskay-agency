@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta
           name="facebook-domain-verification"
-          content="6cs01g7onaexx94serj0jxgwy5roz"
+          content="w75bs6yvs1hesiieqqts3wc2ylux78"
         />
       </head>
       <body className="min-h-screen flex flex-col">
