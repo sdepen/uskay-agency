@@ -4,7 +4,7 @@ export default function Footer() {
     <footer className="w-full bg-black text-white">
       <div className="mx-auto max-w-7xl px-6 py-4 text-sm">
         <p className="opacity-90">
-          © 2025 Uskay Agency. Tous droits réservés&nbsp; |&nbsp;
+          © 2025 Uskay Agency – Raison sociale : Sacha Depenweiller. Tous droits réservés.&nbsp; |&nbsp;
           <a href="/mentions-legales" className="underline-offset-2 hover:underline">
             Mentions légales
           </a>
