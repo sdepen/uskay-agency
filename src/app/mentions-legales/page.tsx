@@ -29,7 +29,7 @@ export default function MentionsLegalesPage() {
             <strong>Statut :</strong> Micro-entrepreneur
           </li>
           <li>
-            <strong>Adresse :</strong> 17B route de Boussange, 57270 Richemont, France
+            <strong>Adresse :</strong> 17 Bis route de Boussange, 57270 Richemont, France
           </li>
           <li>
             <strong>Email :</strong>{" "}
