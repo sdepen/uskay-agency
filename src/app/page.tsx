@@ -277,42 +277,43 @@ export default function Page() {
         </section>
       </div>
 
-      {/* ================= RÉALISATIONS ================= */}
-      <div className="w-full border-t border-border">
-        <section id="realisations" className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
-              RÉALISATIONS
-            </h2>
-            <p className="mt-2 text-muted-foreground">
-              Exemples d’UGC produits par notre réseau de créateurs et créatrices :
-            </p>
+{/* ================= RÉALISATIONS ================= */}
+<div className="w-full border-t border-border">
+  <section id="realisations" className="py-20">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "var(--uskay-font, ui-sans-serif)" }}>
+        RÉALISATIONS
+      </h2>
+      <p className="mt-2 text-muted-foreground">
+        Exemples d’UGC produits par notre réseau de créateurs et créatrices :
+      </p>
 
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { label: "Exemple UGC 1", src: "/videos/ugc-one.mp4" },
-                { label: "Exemple UGC 2", src: "/videos/ugc-two.mp4" },
-                { label: "Exemple UGC 3", src: "/videos/ugc-three.mp4" },
-              ].map((item, i) => (
-                <div key={i} className="rounded-3xl border border-border bg-card">
-                  <div className="aspect-[9/16] w-full overflow-hidden rounded-t-3xl bg-black">
-                    {item.src ? (
-                      <video
-                        src={item.src}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        className="h-full w-full object-contain"
-                      />
-                    ) : null}
-                  </div>
-                  <div className="p-3 text-sm text-muted-foreground">{item.label}</div>
-                </div>
-              ))}
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          { label: "Exemple UGC 1", src: "/videos/ugc-one.mp4" },
+          { label: "Exemple UGC 2", src: "/videos/ugc-two.mp4" },
+          { label: "Exemple UGC 3", src: "/videos/ugc-three.mp4" },
+        ].map((item, i) => (
+          <div key={i} className="rounded-3xl border border-border bg-card">
+            <div className="aspect-[9/16] w-full overflow-hidden rounded-t-3xl bg-black">
+              {item.src ? (
+                <video
+                  src={item.src}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-contain"
+                />
+              ) : null}
             </div>
+            <div className="p-3 text-sm text-muted-foreground">{item.label}</div>
           </div>
-        </section>
+        ))}
       </div>
+    </div>
+  </section>
+</div>
+
 
       {/* ================= CTA ================= */}
       <div className="w-full border-t border-border">
