@@ -290,7 +290,7 @@ export default function Page() {
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[
-          { label: "Exemple UGC 1", src: "/videos/ugc-one.mp4" },
+          { label: "Exemple UGC 1", src: "/videos/ugc-four.mp4" },
           { label: "Exemple UGC 2", src: "/videos/ugc-two.mp4" },
           { label: "Exemple UGC 3", src: "/videos/ugc-three.mp4" },
         ].map((item, i) => (
