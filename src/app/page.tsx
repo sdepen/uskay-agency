@@ -290,9 +290,9 @@ export default function Page() {
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[
-          { label: "Exemple UGC 1", src: "/videos/ugc-four.mp4" },
-          { label: "Exemple UGC 2", src: "/videos/ugc-two.mp4" },
-          { label: "Exemple UGC 3", src: "/videos/ugc-three.mp4" },
+          { label: "Exemple de nos vidéos nutrition", src: "/videos/ugc-four.mp4" },
+          { label: "Exemple de nos vidéos skincare", src: "/videos/ugc-two.mp4" },
+          { label: "Exemple de nos vidéos bien-être", src: "/videos/ugc-three.mp4" },
         ].map((item, i) => (
           <div key={i} className="rounded-3xl border border-border bg-card">
             <div className="aspect-[9/16] w-full overflow-hidden rounded-t-3xl bg-black">
